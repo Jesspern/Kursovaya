@@ -1,9 +1,9 @@
 #include "contest_info.h"
 
-contest_info::contest_info(unsigned int id_member, std::string name, std::string surname,
+contest_info::contest_info(int id_member, std::string name, std::string surname,
 	std::string patronymic, std::string day_of_birthday, std::string resume,
-	unsigned int id_hrmanager, unsigned int id_contest, std::string prog_lang,
-	unsigned int tasks_count, unsigned int tasks_complete, bool cheating) {
+	int id_hrmanager, int id_contest, std::string prog_lang, int tasks_count, 
+	int tasks_complete, bool cheating) {
 		
 	_id_member = id_member;
 	_name = name;
@@ -20,11 +20,27 @@ contest_info::contest_info(unsigned int id_member, std::string name, std::string
 
 }
 
-void contest_info::set_id_member(unsigned int id_member) {
+contest_info& contest_info::operator=(const contest_info& other) {
+	this->set_id_member(other.get_id_member());
+	this->set_name(other.get_name());
+	this->set_surname(other.get_surname());
+	this->set_patronymic(other.get_patronymic());
+	this->set_day_of_birthday(other.get_day_of_birthday());
+	this->set_resume(other.get_resume());
+	this->set_id_hrmanager(other.get_id_hrmanager());
+	this->set_id_contest(other.get_id_contest());
+	this->set_prog_lang(other.get_prog_lang());
+	this->set_tasks_count(other.get_tasks_count());
+	this->set_tasks_complete(other.get_tasks_complete());
+	this->set_cheating(other.get_cheating());
+	return *this;
+}
+
+void contest_info::set_id_member(int id_member) {
 	_id_member = id_member;
 }
 
-unsigned int contest_info::get_id_member() const {
+int contest_info::get_id_member() const {
 	return _id_member;
 }
 
@@ -36,7 +52,7 @@ std::string contest_info::get_name() const {
 	return _name;
 }
 
-void contest_info::set_surname(std::string surname) {
+void contest_info::set_surname(std::string const& surname) {
 	_surname = surname;
 }
 
@@ -44,7 +60,7 @@ std::string contest_info::get_surname() const {
 	return _surname;
 }
 
-void contest_info::set_patronymic(std::string patronymic) {
+void contest_info::set_patronymic(std::string const& patronymic) {
 	_patronymic = patronymic;
 }
 
@@ -52,7 +68,7 @@ std::string contest_info::get_patronymic() const {
 	return _patronymic;
 }
 
-void contest_info::set_day_of_birthday(std::string day_of_birthday) {
+void contest_info::set_day_of_birthday(std::string const& day_of_birthday) {
 	_day_of_birthday = day_of_birthday;
 }
 
@@ -60,7 +76,7 @@ std::string contest_info::get_day_of_birthday() const {
 	return _day_of_birthday;
 }
 
-void contest_info::set_resume(std::string resume) {
+void contest_info::set_resume(std::string const& resume) {
 	_resume = resume;
 }
 
@@ -68,23 +84,23 @@ std::string contest_info::get_resume() const {
 	return _resume;
 }
 
-void contest_info::set_id_hrmanager(unsigned int id_hrmanager) {
+void contest_info::set_id_hrmanager(int id_hrmanager) {
 	_id_hrmanager = id_hrmanager;
 }
 
-unsigned int contest_info::get_id_hrmanager() const {
+int contest_info::get_id_hrmanager() const {
 	return _id_hrmanager;
 }
 
-void contest_info::set_id_contest(unsigned int id_contest) {
+void contest_info::set_id_contest(int id_contest) {
 	_id_contest = id_contest;
 }
 
-unsigned int contest_info::get_id_contest() const {
+int contest_info::get_id_contest() const {
 	return _id_contest;
 }
 
-void contest_info::set_prog_lang(std::string prog_lang) {
+void contest_info::set_prog_lang(std::string const& prog_lang) {
 	_prog_lang = prog_lang;
 }
 
@@ -92,19 +108,19 @@ std::string contest_info::get_prog_lang() const {
 	return _prog_lang;
 }
 
-void contest_info::set_tasks_count(unsigned int tasks_count) {
+void contest_info::set_tasks_count(int tasks_count) {
 	_tasks_count = tasks_count;
 }
 
-unsigned int contest_info::get_tasks_count() const {
+int contest_info::get_tasks_count() const {
 	return _tasks_count;
 }
 
-void contest_info::set_tasks_complete(unsigned int tasks_complete) {
+void contest_info::set_tasks_complete(int tasks_complete) {
 	_tasks_complete = tasks_complete;
 }
 
-unsigned int contest_info::get_tasks_complete() const {
+int contest_info::get_tasks_complete() const {
 	return _tasks_complete;
 }
 

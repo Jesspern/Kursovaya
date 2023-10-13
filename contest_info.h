@@ -3,74 +3,85 @@
 
 #include <iostream>
 #include <string>
+#include "contest_info.h"
+#include "command.h"
+#include <list>
 
 class contest_info
 {
 private:
 
-	unsigned int _id_member;
+	int _id_member;
 	std::string _name;
 	std::string _surname;
 	std::string _patronymic;
 	std::string _day_of_birthday;
 	std::string _resume;
-	unsigned int _id_hrmanager;
-	unsigned int _id_contest;
+	int _id_hrmanager;
+	int _id_contest;
 	std::string _prog_lang;
-	unsigned int _tasks_count;
-	unsigned int _tasks_complete;
+	int _tasks_count;
+	int _tasks_complete;
 	bool _cheating = false;
 
 public:
 
-	contest_info(unsigned int id_member, std::string name, std::string surname,
+	command* first_command;
+
+	contest_info() = default;
+
+	contest_info(int id_member, std::string name, std::string surname,
 		std::string patronymic, std::string day_of_birthday, std::string resume,
-		unsigned int id_hrmanager, unsigned int id_contest, std::string prog_lang,
-		unsigned int tasks_count, unsigned int tasks_complete, bool cheating);
+		int id_hrmanager, int id_contest, std::string prog_lang,
+		int tasks_count, int tasks_complete, bool cheating);
 
-	void set_id_member(unsigned int id_member);
+	~contest_info() = default;
 
-	unsigned int get_id_member() const;
+	contest_info& operator=(const contest_info& other);
+	
+	void set_id_member(int id_member);
+
+	int get_id_member() const;
 
 	void set_name(std::string const& name);
 
 	std::string get_name() const;
 
-	void set_surname(std::string surname);
+	void set_surname(std::string const& surname);
 
 	std::string get_surname() const;
 
-	void set_patronymic(std::string patronymic);
+	void set_patronymic(std::string const& patronymic);
 
 	std::string get_patronymic() const;
 
-	void set_day_of_birthday(std::string day_of_birthday);
+	void set_day_of_birthday(std::string const& day_of_birthday);
 
 	std::string get_day_of_birthday() const;
 
-	void set_resume(std::string resume);
+	void set_resume(std::string const& resume);
 
 	std::string get_resume() const;
 
-	void set_id_hrmanager(unsigned int id_hrmanager);
+	void set_id_hrmanager(int id_hrmanager);
 
-	unsigned int get_id_hrmanager() const;
+	int get_id_hrmanager() const;
 
-	void set_id_contest(unsigned int id_contest);
+	void set_id_contest(int id_contest);
 
-	unsigned int get_id_contest() const;
+	int get_id_contest() const;
 
-	void set_prog_lang(std::string prog_lang);
+	void set_prog_lang(std::string const& prog_lang);
 
 	std::string get_prog_lang() const;
 
-	void set_tasks_count(unsigned int tasks_count);
+	void set_tasks_count(int tasks_count);
 
-	unsigned int get_tasks_count() const;
+	int get_tasks_count() const;
 
-	void set_tasks_complete(unsigned int tasks_complete);
+	void set_tasks_complete(int tasks_complete);
 
-	unsigned int get_tasks_complete() const;
+	int get_tasks_complete() const;
 
 	void set_cheating(bool cheating);
 

@@ -7,10 +7,10 @@
 #include <stdexcept>
 #include "contest_info.h"
 
-using collection = associative_container<std::pair<int, int>, contest_info*, comparer>;
-using scheme = associative_container<std::string, collection*, comparer>;
-using pull = associative_container<std::string, scheme*, comparer>;
-using dbase = associative_container<std::string, pull*, comparer>;
+using collection = associative_container<contest_info* , contest_info*, comparer_id_member_id_contest>;
+using scheme = associative_container<std::string, collection*, string_comparer>;
+using pull = associative_container<std::string, scheme*, string_comparer>;
+using dbase = associative_container<std::string, pull*, string_comparer>;
 
 
 class data_base {
@@ -47,6 +47,8 @@ public:
 
 	collection* go_to_collection(std::string pull_name, std::string scheme_name,
 		std::string collection_name);
+
+	contest_info* go_to_contest_info(collection* collection_name, std::pair<int, int> key);
 
 	void create_pull(std::string name, flag f, int b_const = 3);
 

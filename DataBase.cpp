@@ -26,7 +26,7 @@ data_base::data_base(data_base::flag f, int b_const = 3)
 	switch (f)
 	{
 	case flag::Btree:
-		_dbase = new Btree<std::string, pull *, comparer>(b_const);
+		_dbase = new Btree<std::string, pull *, string_comparer>(b_const);
 		break;
 
 	case flag::B_plus_tree:
@@ -117,35 +117,51 @@ collection* data_base::go_to_collection(std::string pull_name, std::string schem
 	return temp_collection;
 }
 
+contest_info* data_base::go_to_contest_info(collection* collection_name, std::pair<int, int> key) 
+{
+	contest_info* contest;
+	contest_info* key_contest = new contest_info;
+	key_contest->set_id_member(key.first);
+	key_contest->set_id_contest(key.second);
+	try {
+		contest = collection_name->find(key_contest);
+	}
+	catch (std::invalid_argument&) {
+		throw std::invalid_argument("Wrong name of collection");
+	}
+	delete key_contest;
+	return contest;
+}
+
 void data_base::create_pull(std::string name, data_base::flag f, int b_const)
 {
 	pull* pull1;
 	switch (f)
 	{
 	case flag::Btree:
-		pull1 = new Btree<std::string, scheme*, comparer>(Btree<std::string, scheme*, comparer>(b_const));
+		pull1 = new Btree<std::string, scheme*, string_comparer>(Btree<std::string, scheme*, string_comparer>(b_const));
 		break;
 
 	case flag::B_plus_tree:
-		pull1 = new Btree<std::string, scheme*, comparer>(Btree<std::string, scheme*, comparer>(b_const));
+		pull1 = new Btree<std::string, scheme*, string_comparer>(Btree<std::string, scheme*, string_comparer>(b_const));
 		break;
 
 	case flag::AVL:
-		pull1 = new Btree<std::string, scheme*, comparer>(Btree<std::string, scheme*, comparer>(b_const));
+		pull1 = new Btree<std::string, scheme*, string_comparer>(Btree<std::string, scheme*, string_comparer>(b_const));
 		break;
 
 	case flag::RB:
-		pull1 = new Btree<std::string, scheme*, comparer>(Btree<std::string, scheme*, comparer>(b_const));
+		pull1 = new Btree<std::string, scheme*, string_comparer>(Btree<std::string, scheme*, string_comparer>(b_const));
 		break;
 
 	case flag::Splay:
-		pull1 = new Btree<std::string, scheme*, comparer>(Btree<std::string, scheme*, comparer>(b_const));
+		pull1 = new Btree<std::string, scheme*, string_comparer>(Btree<std::string, scheme*, string_comparer>(b_const));
 		break;
 
 	default:
 		throw std::invalid_argument("Flag is not correct");
 	}
-	_dbase->insert(name, std::move(pull1));
+	_dbase->insert(name, pull1);
 }
 
 void data_base::create_scheme(std::string name, std::string pull_name, data_base::flag f, int b_const)
@@ -162,23 +178,23 @@ void data_base::create_scheme(std::string name, std::string pull_name, data_base
 	switch (f)
 	{
 	case flag::Btree:
-		scheme1 = new Btree<std::string, collection*, comparer>(b_const);
+		scheme1 = new Btree<std::string, collection*, string_comparer>(b_const);
 		break;
 
 	case flag::B_plus_tree:
-		scheme1 = new Btree<std::string, collection*, comparer>(b_const);
+		scheme1 = new Btree<std::string, collection*, string_comparer>(b_const);
 		break;
 
 	case flag::AVL:
-		scheme1 = new Btree<std::string, collection*, comparer>(b_const);
+		scheme1 = new Btree<std::string, collection*, string_comparer>(b_const);
 		break;
 
 	case flag::RB:
-		scheme1 = new Btree<std::string, collection*, comparer>(b_const);
+		scheme1 = new Btree<std::string, collection*, string_comparer>(b_const);
 		break;
 
 	case flag::Splay:
-		scheme1 = new Btree<std::string, collection*, comparer>(b_const);
+		scheme1 = new Btree<std::string, collection*, string_comparer>(b_const);
 		break;
 
 	default:
@@ -202,23 +218,23 @@ void data_base::create_collection(std::string name, std::string pull_name,
 	switch (f)
 	{
 	case flag::Btree:
-		temp_collection = new Btree<std::pair<int, int>, contest_info*, comparer>(b_const);
+		temp_collection = new Btree<contest_info*, contest_info*, comparer_id_member_id_contest>(b_const);
 		break;
 
 	case flag::B_plus_tree:
-		temp_collection = new Btree<std::pair<int, int>, contest_info*, comparer>(b_const);
+		temp_collection = new Btree<contest_info*, contest_info*, comparer_id_member_id_contest>(b_const);
 		break;
 
 	case flag::AVL:
-		temp_collection = new Btree<std::pair<int, int>, contest_info*, comparer>(b_const);
+		temp_collection = new Btree<contest_info*, contest_info*, comparer_id_member_id_contest>(b_const);
 		break;
 
 	case flag::RB:
-		temp_collection = new Btree<std::pair<int, int>, contest_info*, comparer>(b_const);
+		temp_collection = new Btree<contest_info*, contest_info*, comparer_id_member_id_contest>(b_const);
 		break;
 
 	case flag::Splay:
-		temp_collection = new Btree<std::pair<int, int>, contest_info*, comparer>(b_const);
+		temp_collection = new Btree<contest_info* , contest_info*, comparer_id_member_id_contest>(b_const);
 		break;
 	default:
 		throw std::invalid_argument("Flag is not correct");

@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <stack>
-#include "Comparer.cpp"
+#include "comparer.h"
 #include <stdexcept>
 
 template<
