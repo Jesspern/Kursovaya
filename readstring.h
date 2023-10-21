@@ -26,5 +26,9 @@ public:
 
 	void in_data(std::string str, int* data);
 
+	int read_data(std::string* str, char* c, std::ifstream& file);
+
+	~read_string() = default;
+
 };
 #endif

@@ -251,3 +251,30 @@ int read_string::in_seconds_str(int* seconds, char* c, std::ifstream& file) {
 	}
 	return 3;
 }
+
+int read_string::read_data(std::string* str, char* c, std::ifstream& file) {
+	file >> std::noskipws >> (*c);
+	if ((*c) != ' ' or (!file.eof()) or (*c) != '\n') {
+		(*str).append(1, (*c));
+	}
+	else {
+		return 0;
+	}
+	while ((*c) != ' ' and (!file.eof()) and (*c) != '\n') {
+		file >> std::noskipws >> (*c);
+		if ((*c) == ' ' or file.eof() or (*c) == '\n') {
+			break;
+		}
+		(*str).append(1, *c);
+	}
+	if ((*c) == ' ') {
+		return 0;
+	}
+	if (file.eof()) {
+		return 1;
+	}
+	if ((*c) == '\n') {
+		return 2;
+	}
+	return 3;
+}

@@ -8,11 +8,19 @@ class string_pool {
 
 private:
 
-	std::list<std::string> str_pool;
+	static string_pool* _instance;
+
+	std::list<std::string*> str_pool;
+
+protected:
+
+	string_pool() = default;
 
 public:
 
-	std::string* get_str(std::string str);
+	static string_pool* Instance();
+
+	std::string* get_str(std::string const& str);
 
 };
 

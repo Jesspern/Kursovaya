@@ -1,3 +1,8 @@
+#ifndef ASSOCIATIVE_CONTAINER
+#define ASSOCIATIVE_CONTAINER
+ // !ASSOCIATIVA_CONTAINER
+
+
 template<
 	typename tkey,
 	typename tvalue,
@@ -18,3 +23,4 @@ public:
 	virtual tvalue remove(tkey key) = 0;
 
 };
+#endif

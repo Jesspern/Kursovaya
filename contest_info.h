@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include "contest_info.h"
 #include "command.h"
 #include <list>
 
@@ -12,14 +11,14 @@ class contest_info
 private:
 
 	int _id_member;
-	std::string _name;
-	std::string _surname;
-	std::string _patronymic;
-	std::string _day_of_birthday;
-	std::string _resume;
+	const std::string* _name;
+	const std::string* _surname;
+	const std::string* _patronymic;
+	const std::string* _day_of_birthday;
+	const std::string* _resume;
 	int _id_hrmanager;
 	int _id_contest;
-	std::string _prog_lang;
+	const std::string* _prog_lang;
 	int _tasks_count;
 	int _tasks_complete;
 	bool _cheating = false;
@@ -30,9 +29,9 @@ public:
 
 	contest_info() = default;
 
-	contest_info(int id_member, std::string name, std::string surname,
-		std::string patronymic, std::string day_of_birthday, std::string resume,
-		int id_hrmanager, int id_contest, std::string prog_lang,
+	contest_info(int id_member, const std::string* name, const std::string* surname,
+		const std::string* patronymic, const std::string* day_of_birthday, const std::string* resume,
+		int id_hrmanager, int id_contest, const std::string* prog_lang,
 		int tasks_count, int tasks_complete, bool cheating);
 
 	~contest_info() = default;
@@ -43,25 +42,25 @@ public:
 
 	int get_id_member() const;
 
-	void set_name(std::string const& name);
+	void set_name(const std::string* name);
 
-	std::string get_name() const;
+	const std::string* get_name() const;
 
-	void set_surname(std::string const& surname);
+	void set_surname(const std::string* surname);
 
-	std::string get_surname() const;
+	const std::string* get_surname() const;
 
-	void set_patronymic(std::string const& patronymic);
+	void set_patronymic(const std::string* patronymic);
 
-	std::string get_patronymic() const;
+	const std::string* get_patronymic() const;
 
-	void set_day_of_birthday(std::string const& day_of_birthday);
+	void set_day_of_birthday(const std::string* day_of_birthday);
 
-	std::string get_day_of_birthday() const;
+	const std::string* get_day_of_birthday() const;
 
-	void set_resume(std::string const& resume);
+	void set_resume(const std::string* resume);
 
-	std::string get_resume() const;
+	const std::string* get_resume() const;
 
 	void set_id_hrmanager(int id_hrmanager);
 
@@ -71,9 +70,9 @@ public:
 
 	int get_id_contest() const;
 
-	void set_prog_lang(std::string const& prog_lang);
+	void set_prog_lang(const std::string* prog_lang);
 
-	std::string get_prog_lang() const;
+	const std::string* get_prog_lang() const;
 
 	void set_tasks_count(int tasks_count);
 

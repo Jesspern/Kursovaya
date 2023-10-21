@@ -15,13 +15,15 @@ private:
 
 public:
 
-	add_node_key( contest_info* value, collection* tree, int data) :
+	add_node_key( contest_info* value, collection* tree, long long data) :
 		_value(value), _tree(tree) {
 		_time = data;
 	}
 	void execute() override;
 
 	void execute(contest_info& clone) override;
+
+	contest_info get_value();
 
 	~add_node_key() override = default;
 
@@ -31,12 +33,12 @@ class read_node_key final : public command {
 
 private:
 
-	std::pair<int, int> _key;
+	contest_info* _key;
 	collection* _tree;
 
 public:
 
-	read_node_key(std::pair<int, int> key, collection* tree, int data) : _key(key), _tree(tree) {
+	read_node_key(contest_info* key, collection* tree, long long data) : _key(key), _tree(tree) {
 		_time = data;
 	}
 
@@ -72,18 +74,20 @@ class update_node_key_name final : public command {
 
 private:
 
-	std::string _value;
+	const std::string* _value;
 
 
 public:
 
-	update_node_key_name(std::string value, int data) : _value(value) {
+	update_node_key_name(const std::string* value, long long data) : _value(value) {
 		_time = data;
 	};
 
 	void execute() override {}
 
 	void execute(contest_info& clone) override;
+
+	std::string get_value();
 
 	~update_node_key_name() override = default;
 };
@@ -91,18 +95,20 @@ public:
 class update_node_key_surname final : public command {
 private:
 
-	std::string _value;
+	const std::string* _value;
 
 
 public:
 
-	update_node_key_surname(std::string value, int data) : _value(value) {
+	update_node_key_surname(const std::string* value, long long data) : _value(value) {
 		_time = data;
 	};
 
 	void execute() override {}
 
 	void execute(contest_info& clone) override;
+
+	std::string get_value();
 
 	~update_node_key_surname() override = default;
 };
@@ -110,18 +116,20 @@ public:
 class update_node_key_patronymic final : public command {
 private:
 
-	std::string _value;
+	const std::string* _value;
 
 
 public:
 
-	update_node_key_patronymic(std::string value, int data) : _value(value) {
+	update_node_key_patronymic(const std::string* value, long long data) : _value(value) {
 		_time = data;
 	};
 
 	void execute() override {}
 
 	void execute(contest_info& clone) override;
+
+	std::string get_value();
 
 	~update_node_key_patronymic() override = default;
 };
@@ -129,12 +137,12 @@ public:
 class update_node_key_day_of_birthday final : public command {
 private:
 
-	std::string _value;
+	const std::string* _value;
 
 
 public:
 
-	update_node_key_day_of_birthday(std::string value, int data) : _value(value) {
+	update_node_key_day_of_birthday(const std::string* value, long long data) : _value(value) {
 		_time = data;
 	};
 
@@ -142,18 +150,20 @@ public:
 
 	void execute(contest_info& clone) override;
 
+	std::string get_value();
+
 	~update_node_key_day_of_birthday() override = default;
 };
 
 class update_node_key_resume final : public command {
 private:
 
-	std::string _value;
+	const std::string* _value;
 
 
 public:
 
-	update_node_key_resume(std::string value, int data) : _value(value) {
+	update_node_key_resume(const std::string* value, long long data) : _value(value) {
 		_time = data;
 	};
 
@@ -172,13 +182,15 @@ private:
 
 public:
 
-	update_node_key_id_hrmanager(int value, int data) : _value(value) {
+	update_node_key_id_hrmanager(int value, long long data) : _value(value) {
 		_time = data;
 	};
 
 	void execute() override {}
 
 	void execute(contest_info& clone) override;
+
+	int get_value();
 
 	~update_node_key_id_hrmanager() override = default;
 };
@@ -191,7 +203,7 @@ private:
 
 public:
 
-	update_node_key_id_contest(int value, int data) : _value(value) {
+	update_node_key_id_contest(int value, long long data) : _value(value) {
 		_time = data;
 	};
 
@@ -205,18 +217,20 @@ public:
 class update_node_key_prog_lang final : public command {
 private:
 
-	std::string _value;
+	const std::string* _value;
 
 
 public:
 
-	update_node_key_prog_lang(std::string value, int data) : _value(value) {
+	update_node_key_prog_lang(const std::string* value, long long data) : _value(value) {
 		_time = data;
 	};
 
 	void execute() override {}
 
 	void execute(contest_info& clone) override;
+
+	std::string get_value();
 
 	~update_node_key_prog_lang() override = default;
 };
@@ -229,13 +243,15 @@ private:
 
 public:
 
-	update_node_key_tasks_count(int value, int data) : _value(value) {
+	update_node_key_tasks_count(int value, long long data) : _value(value) {
 		_time = data;
 	};
 
 	void execute() override {}
 
 	void execute(contest_info& clone) override;
+
+	int get_value();
 
 	~update_node_key_tasks_count() override = default;
 };
@@ -248,13 +264,15 @@ private:
 
 public:
 
-	update_node_key_tasks_complete(int value, int data) : _value(value) {
+	update_node_key_tasks_complete(int value, long long data) : _value(value) {
 		_time = data;
 	};
 
 	void execute() override {}
 
 	void execute(contest_info& clone) override;
+
+	int get_value();
 
 	~update_node_key_tasks_complete() override = default;
 };
@@ -267,13 +285,15 @@ private:
 
 public:
 
-	update_node_key_cheating(bool value, int data) : _value(value) {
+	update_node_key_cheating(bool value, long long data) : _value(value) {
 		_time = data;
 	};
 
 	void execute() override {}
 
 	void execute(contest_info& clone) override;
+
+	bool get_value();
 
 	~update_node_key_cheating() override = default;
 };
@@ -283,18 +303,20 @@ class remove_node_key final : public command {
 
 private:
 
-	std::pair<int, int> _key;
+	contest_info* _key;
 	collection* _tree;
 
 public:
 
-	remove_node_key(std::pair<int, int> key, collection* tree, int data) : _key(key), _tree(tree) {
+	remove_node_key(contest_info* key, collection* tree, long long data) : _key(key), _tree(tree) {
 		_time = data;
 	}
 
 	void execute() override;
 
 	void execute(contest_info& clone) override {}
+
+	contest_info get_value();
 
 	~remove_node_key() override = default;
 
@@ -304,14 +326,15 @@ class read_node_keys final : public command {
 
 private:
 
-	std::pair<int, int> _key1;
-	std::pair<int, int> _key2;
+	contest_info* _key1;
+	contest_info* _key2;
 	collection* _tree;
+	int _flag;
 
 public:
 
-	read_node_keys(std::pair<int, int> key1, std::pair<int, int> key2, collection* tree, int data) :
-		_key1(key1), _key2(key2), _tree(tree) {
+	read_node_keys(contest_info* key1, contest_info* key2, collection* tree, long long data, int flag) :
+		_key1(key1), _key2(key2), _tree(tree), _flag(flag) {
 		_time = data;
 	}
 
@@ -333,7 +356,7 @@ private:
 
 public:
 
-	invoker& operator->();
+	//invoker& operator->();
 
 	void add_command(contest_info& info, command* cmd);
 
@@ -341,5 +364,6 @@ public:
 
 	void invoke();
 
+	~invoker() = default;
 };
 #endif

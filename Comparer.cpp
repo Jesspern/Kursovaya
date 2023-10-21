@@ -78,42 +78,94 @@ int comparer_id_member_id_contest::comparate(contest_info* first, contest_info* 
 	}
 }
 
-int comparer_id_member_id_contest::comparate(std::pair<int, int> first, contest_info* second) {
-	if (first.first > second->get_id_member()) {
+//int comparer_id_member_id_contest::comparate(std::pair<int, int> first, contest_info* second) {
+//	if (first.first > second->get_id_member()) {
+//		return 1;
+//	}
+//	else if (first.first < second->get_id_member()) {
+//		return 2;
+//	}
+//	else {
+//		if (first.second > second->get_id_contest()) {
+//			return 1;
+//		}
+//		else if (first.second < second->get_id_contest()) {
+//			return 2;
+//		}
+//		else {
+//			return 0;
+//		}
+//	}
+//}
+//
+//int comparer_id_member_id_contest::comparate(contest_info* first, std::pair<int, int> second) {
+//	if (first->get_id_member() > second.first) {
+//		return 1;
+//	}
+//	else if (first->get_id_member() < second.first) {
+//		return 2;
+//	}
+//	else {
+//		if (first->get_id_contest() > second.second) {
+//			return 1;
+//		}
+//		else if (first->get_id_contest() < second.second) {
+//			return 2;
+//		}
+//		else {
+//			return 0;
+//		}
+//	}
+//}
+
+int comparer_resume::comparate(contest_info* first, contest_info* second) {
+	int res = (*(first->get_resume())).compare(*second->get_resume());
+	if (res > 0) {
 		return 1;
 	}
-	else if (first.first < second->get_id_member()) {
+	else if (res < 0) {
 		return 2;
 	}
 	else {
-		if (first.second > second->get_id_contest()) {
-			return 1;
-		}
-		else if (first.second < second->get_id_contest()) {
-			return 2;
-		}
-		else {
-			return 0;
-		}
+		return 0;
 	}
 }
 
-int comparer_id_member_id_contest::comparate(contest_info* first, std::pair<int, int> second) {
-	if (first->get_id_member() > second.first) {
+int comparer_resume::comparate(std::string* first, contest_info* second) {
+	int res = (*(first)).compare(*second->get_resume());
+	if (res > 0) {
 		return 1;
 	}
-	else if (first->get_id_member() < second.first) {
+	else if (res < 0) {
 		return 2;
 	}
 	else {
-		if (first->get_id_contest() > second.second) {
-			return 1;
-		}
-		else if (first->get_id_contest() < second.second) {
-			return 2;
-		}
-		else {
-			return 0;
-		}
+		return 0;
+	}
+}
+
+int comparer_resume::comparate(contest_info* first, std::string* second) {
+	int res = (*(first->get_resume())).compare(*second);
+	if (res > 0) {
+		return 1;
+	}
+	else if (res < 0) {
+		return 2;
+	}
+	else {
+		return 0;
+	}
+}
+
+int string_const_ptr::comparate(const std::string* first, const std::string* second) {
+	int res = first->compare(*second);
+	if (res > 0) {
+		return 1;
+	}
+	else if (res < 0) {
+		return 2;
+	}
+	else {
+		return 0;
 	}
 }
