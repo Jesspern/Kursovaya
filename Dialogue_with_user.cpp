@@ -1451,16 +1451,13 @@ void dialogue::commands_from_file(std::ifstream& file, data_base* d_base) {
 					// create dbase
 					//data_base::flag::Btree
 					if (compare.compare("B-tree") == 0) {
-						*d_base = data_base(data_base::flag::Btree, 3);
+						d_base = new data_base(data_base::flag::Btree, 3);
 					}
 					else if (compare.compare("AVL") == 0) {
-
-					}
-					else if (compare.compare("RB") == 0) {
-
+						d_base = new data_base(data_base::flag::AVL, 3);
 					}
 					else if (compare.compare("Splay") == 0) {
-
+						d_base = new data_base(data_base::flag::Splay, 3);
 					}
 					else {
 						file.close();
@@ -1470,30 +1467,17 @@ void dialogue::commands_from_file(std::ifstream& file, data_base* d_base) {
 				}
 				else if (compare.compare("pull") == 0) {
 					compare = "";
-					if (rstr.in_str(&compare, &input, file) != 0) {
-						file.close();
-						throw std::invalid_argument("Wrong input in file");
-					}
-					const std::string* name_pull = str_p->get_str(compare);
-					compare = "";
 					if (rstr.in_str(&compare, &input, file) == 0) {
 						file.close();
 						throw std::invalid_argument("Wrong input in file");
 					}
+					const std::string* name_pull = str_p->get_str(compare);
 					// create pull
-					if (compare.compare("B-tree") == 0) {
+					try {
 						d_base->create_pull(name_pull, data_base::flag::Btree, 3);
 					}
-					else if (compare.compare("AVL") == 0) {
-
-					}
-					else if (compare.compare("RB") == 0) {
-
-					}
-					else if (compare.compare("Splay") == 0) {
-
-					}
-					else {
+					catch (std::invalid_argument& e) {
+						std::cerr << e.what() << std::endl;
 						file.close();
 						throw std::invalid_argument("Wrong input in file");
 					}
@@ -1507,30 +1491,16 @@ void dialogue::commands_from_file(std::ifstream& file, data_base* d_base) {
 					}
 					const std::string* pull_name = str_p->get_str(compare);
 					compare = "";
-					if (rstr.in_str(&compare, &input, file) != 0) {
-						file.close();
-						throw std::invalid_argument("Wrong input in file");
-					}
-					const std::string* scheme_name = str_p->get_str(compare);
-					compare = "";
 					if (rstr.in_str(&compare, &input, file) == 0) {
 						file.close();
 						throw std::invalid_argument("Wrong input in file");
 					}
-					// create scheme
-					if (compare.compare("B-tree") == 0) {
+					const std::string* scheme_name = str_p->get_str(compare);
+					try {
 						d_base->create_scheme(scheme_name, pull_name, data_base::flag::Btree);
 					}
-					else if (compare.compare("AVL") == 0) {
-
-					}
-					else if (compare.compare("RB") == 0) {
-
-					}
-					else if (compare.compare("Splay") == 0) {
-
-					}
-					else {
+					catch (std::invalid_argument& e) {
+						std::cerr << e.what() << std::endl;
 						file.close();
 						throw std::invalid_argument("Wrong input in file");
 					}
@@ -1551,29 +1521,16 @@ void dialogue::commands_from_file(std::ifstream& file, data_base* d_base) {
 					}
 					const std::string* scheme_name = str_p->get_str(compare);
 					compare = "";
-					if (rstr.in_str(&compare, &input, file) != 0) {
-						file.close();
-						throw std::invalid_argument("Wrong input in file");
-					}
-					const std::string* name_collection = str_p->get_str(compare);
-					compare = "";
 					if (rstr.in_str(&compare, &input, file) == 0) {
 						file.close();
 						throw std::invalid_argument("Wrong input in file");
 					}
-					if (compare.compare("B-tree") == 0) {
+					const std::string* name_collection = str_p->get_str(compare);
+					try {
 						d_base->create_collection(name_collection, pull_name, scheme_name, data_base::flag::Btree, 3);
 					}
-					else if (compare.compare("AVL") == 0) {
-
-					}
-					else if (compare.compare("RB") == 0) {
-
-					}
-					else if (compare.compare("Splay") == 0) {
-
-					}
-					else {
+					catch (std::invalid_argument& e) {
+						std::cerr << e.what() << std::endl;
 						file.close();
 						throw std::invalid_argument("Wrong input in file");
 					}
@@ -2410,17 +2367,17 @@ void dialogue::commands_from_file(std::ifstream& file, data_base* d_base) {
 					throw std::invalid_argument("Wrong input in file");
 				}
 			}
-			/*else if (compare == "save") {
+			else if (compare == "save") {
 				compare = "";
 				int flag_save = rstr.in_str(&compare, &input, file);
 				if (flag_save == 0 or flag_save == 3) {
 					file.close();
 					throw std::invalid_argument("Wrong input in file");
 				}
-				dbase_safe saver(compare, d_base, data_base::flag::Btree);
+				dbase_safe saver("C:\\savebd\\savetree.txt", d_base, data_base::flag::Btree);
 				saver.save();
 			}
-			else if (compare == "upload") {
+			/*else if (compare == "upload") {
 				compare = "";
 				int flag_save = rstr.in_str(&compare, &input, file);
 				if (flag_save == 0 or flag_save == 3) {
