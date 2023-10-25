@@ -15,7 +15,7 @@ private:
 
 public:
 
-	add_node_key( contest_info* value, collection* tree, long long data) :
+	add_node_key(contest_info* value, collection* tree, long long data) :
 		_value(value), _tree(tree) {
 		_time = data;
 	}

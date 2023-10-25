@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <stack>
 #include "comparer.h"
 #include <stdexcept>
@@ -31,7 +31,7 @@ private:
 public:
 
 	splay_tree();
-	
+
 	splay_tree(tkey _key, tvalue _value);
 
 	~splay_tree() {};
@@ -94,11 +94,11 @@ splay_tree<tkey, tvalue, tkey_comparer>::splay_tree(tkey _key, tvalue _value)
 }
 
 template<
-	typename tkey, 
-	typename tvalue, 
+	typename tkey,
+	typename tvalue,
 	typename tkey_comparer>
 typename splay_tree<tkey, tvalue, tkey_comparer>::node** splay_tree<tkey, tvalue, tkey_comparer>::zig_right
-	(splay_tree<tkey, tvalue, tkey_comparer>::node* root)
+(splay_tree<tkey, tvalue, tkey_comparer>::node* root)
 {
 	splay_tree<tkey, tvalue, tkey_comparer>::node* temp = root->left_subtree;
 	root->left_subtree = temp->right_subtree;
@@ -286,7 +286,7 @@ template<
 	typename tvalue,
 	typename tkey_comparer>
 typename splay_tree<tkey, tvalue, tkey_comparer>::node* splay_tree<tkey, tvalue, tkey_comparer>::remove(tkey search)
-{	
+{
 	splay_tree<tkey, tvalue, tkey_comparer>::node* temp = down(search, _tree_root);
 	if (_comp.comparate(temp->key, search) != 0) {
 		std::cout << "Mistake with remove element";
@@ -355,7 +355,7 @@ void splay_tree<tkey, tvalue, tkey_comparer>::change_node(tkey search, tvalue me
 	test.insert(15, 16);
 
 	test.insert(5, 5);
-	
+
 	test.insert(20, 21);
 
 	test.print_root();

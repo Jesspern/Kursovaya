@@ -62,11 +62,13 @@ public:
 
 	private:
 
-		explicit infix_iterator(Btree<tkey, tvalue, tkey_comparer> const & tree, bool flag);
+		explicit infix_iterator(Btree<tkey, tvalue, tkey_comparer> const& tree, bool flag);
 
 	public:
 
-		bool operator==(infix_iterator const &other) const;
+		bool operator==(infix_iterator const& other) const;
+
+		bool operator!=(infix_iterator const& other) const;
 
 		infix_iterator& operator++();
 
@@ -89,14 +91,14 @@ public:
 private:
 
 	tvalue findkey(tkey key, node* node);
-	void insert_node(tkey key, tvalue & value, node* node);
+	void insert_node(tkey key, tvalue& value, node* node);
 	void separate(node* node);
 	tvalue delete_key(tkey key, node* node);
 	node* add_key(node* node);
 	node* merge_brothers(node* left_brother, node* right_brother);
 	node* max_elem(node* node);
 	void delete_with_exchange(tkey key, node* node);
-	tvalue swapkey(tkey key, tvalue & value, node* node);
+	tvalue swapkey(tkey key, tvalue& value, node* node);
 	void deletenode(node* node);
 
 public:
@@ -114,8 +116,8 @@ public:
 		other._t = 0;
 
 	}
-	
-	Btree(const Btree & other) {
+
+	Btree(const Btree& other) {
 		auto it_begin = other.infix_iterator_begin();
 		auto it_end = other.infix_iterator_end();
 
@@ -125,10 +127,11 @@ public:
 		}
 	}
 
- 	~Btree();
+	~Btree();
 
+	bool check_tree();
 	tvalue find(tkey key);
-	void insert(tkey key, tvalue & value);
+	void insert(tkey key, tvalue& value);
 	tvalue remove(tkey key);
 	tvalue swap_value(tkey key, tvalue value);
 
@@ -138,7 +141,7 @@ template<
 	typename tkey,
 	typename tvalue,
 	typename tkey_comparer>
-Btree<tkey, tvalue, tkey_comparer>::infix_iterator::infix_iterator(Btree<tkey, tvalue, tkey_comparer> const & tree, bool flag)
+Btree<tkey, tvalue, tkey_comparer>::infix_iterator::infix_iterator(Btree<tkey, tvalue, tkey_comparer> const& tree, bool flag)
 {
 	_tree_root = tree._root;
 	_index = 0;
@@ -161,13 +164,26 @@ template<
 	typename tkey,
 	typename tvalue,
 	typename tkey_comparer>
-bool Btree<tkey, tvalue, tkey_comparer>::infix_iterator::operator==(Btree<tkey, tvalue, tkey_comparer>::infix_iterator const &other) const
+bool Btree<tkey, tvalue, tkey_comparer>::infix_iterator::operator==(Btree<tkey, tvalue, tkey_comparer>::infix_iterator const& other) const
 {
 	if ((*this)._tree_root == other._tree_root and (*this)._index == other._index) {
 		return true;
 	}
 	else {
 		return false;
+	}
+}
+
+template<
+	typename tkey,
+	typename tvalue,
+	typename tkey_comparer>
+bool Btree<tkey, tvalue, tkey_comparer>::infix_iterator::operator!=(infix_iterator const& other) const {
+	if ((*this)._tree_root == other._tree_root and (*this)._index == other._index) {
+		return false;
+	}
+	else {
+		return true;
 	}
 }
 
@@ -246,6 +262,17 @@ template<
 	typename tkey,
 	typename tvalue,
 	typename tkey_comparer>
+bool Btree<tkey, tvalue, tkey_comparer>::check_tree() {
+	if (_root == nullptr) {
+		return false;
+	}
+	return true;
+}
+
+template<
+	typename tkey,
+	typename tvalue,
+	typename tkey_comparer>
 void Btree<tkey, tvalue, tkey_comparer>::deletenode(Btree<tkey, tvalue, tkey_comparer>::node* node)
 {
 	while (node != nullptr) {
@@ -317,7 +344,7 @@ tvalue Btree<tkey, tvalue, tkey_comparer>::findkey(tkey key, Btree<tkey, tvalue,
 	else {
 		throw std::invalid_argument("ID is not correct");
 	}
-	
+
 }
 
 template<
@@ -339,14 +366,14 @@ template<
 	typename tkey,
 	typename tvalue,
 	typename tkey_comparer>
-void Btree<tkey, tvalue, tkey_comparer>::insert_node(tkey key, tvalue & value, Btree<tkey, tvalue, tkey_comparer>::node* node)
+void Btree<tkey, tvalue, tkey_comparer>::insert_node(tkey key, tvalue& value, Btree<tkey, tvalue, tkey_comparer>::node* node)
 {
 	Btree<tkey, tvalue, tkey_comparer>::bkeys temp;
 	temp.key = key;
 	temp.value = value;
 	node->keys.push_back(temp);
 	//std::sort(node->keys.begin(), node->keys.end(), comparer);
-	std::sort(node->keys.begin(), node->keys.end(), 
+	std::sort(node->keys.begin(), node->keys.end(),
 		[](Btree<tkey, tvalue, tkey_comparer>::bkeys& first, Btree<tkey, tvalue, tkey_comparer>::bkeys& second)
 		{return first.key < second.key; });
 }
@@ -441,7 +468,7 @@ template<
 	typename tkey,
 	typename tvalue,
 	typename tkey_comparer>
-void Btree<tkey, tvalue, tkey_comparer>::insert(tkey key, tvalue & value)
+void Btree<tkey, tvalue, tkey_comparer>::insert(tkey key, tvalue& value)
 {
 	// check if this key exist
 	if (_root == nullptr) {
@@ -493,7 +520,7 @@ tvalue Btree<tkey, tvalue, tkey_comparer>::delete_key(tkey key, Btree<tkey, tval
 {
 	for (int i = 0; i < node->keys.size(); i++) {
 		if (_comp.comparate(node->keys[i].key, key) == 0) {
-			tvalue & value = node->keys[i].value;
+			tvalue& value = node->keys[i].value;
 			node->keys.erase(node->keys.begin() + i);
 			return value;
 		}
@@ -577,7 +604,7 @@ typename Btree<tkey, tvalue, tkey_comparer>::node* Btree<tkey, tvalue, tkey_comp
 							two_brothers->keys.push_back(right_brother->keys[j - _t]);
 						}
 					}
-					
+
 					two_brothers->parent = parent;
 					two_brothers->leaf = true;
 					parent->children[i] = two_brothers;
@@ -834,7 +861,7 @@ tvalue Btree<tkey, tvalue, tkey_comparer>::remove(tkey key)
 					delete_with_exchange(key, temp);
 				}
 			}
-			
+
 			break;
 		}
 		else if (_comp.comparate(temp->keys[i].key, key) == 1) {
@@ -852,7 +879,7 @@ template<
 	typename tkey,
 	typename tvalue,
 	typename tkey_comparer>
-tvalue Btree<tkey, tvalue, tkey_comparer>::swapkey(tkey key, tvalue & value, Btree<tkey, tvalue, tkey_comparer>::node* node)
+tvalue Btree<tkey, tvalue, tkey_comparer>::swapkey(tkey key, tvalue& value, Btree<tkey, tvalue, tkey_comparer>::node* node)
 {
 	if (node != nullptr) {
 		if (node->leaf == false) {
@@ -896,7 +923,7 @@ tvalue Btree<tkey, tvalue, tkey_comparer>::swap_value(tkey key, tvalue value)
 	}
 	tvalue _value;
 	try {
-		 _value = swapkey(key, value, _root);
+		_value = swapkey(key, value, _root);
 	}
 	catch (std::invalid_argument&) {
 		throw std::invalid_argument("Id is not correct in swap");

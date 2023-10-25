@@ -2,7 +2,7 @@
 #define STRINGPOOL
 
 #include <iostream>
-#include <list>
+#include <vector>
 
 class string_pool {
 
@@ -10,7 +10,7 @@ private:
 
 	static string_pool* _instance;
 
-	std::list<std::string*> str_pool;
+	std::vector<std::string*> str_pool;
 
 protected:
 

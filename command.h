@@ -1,6 +1,6 @@
 #ifndef COMMAND
 #define COMMAND
- 
+
 #include <ctime>
 
 class contest_info;

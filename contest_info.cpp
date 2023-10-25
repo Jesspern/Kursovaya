@@ -2,9 +2,9 @@
 
 contest_info::contest_info(int id_member, const std::string* name, const std::string* surname,
 	const std::string* patronymic, const std::string* day_of_birthday, const std::string* resume,
-	int id_hrmanager, int id_contest, const std::string* prog_lang, int tasks_count, 
+	int id_hrmanager, int id_contest, const std::string* prog_lang, int tasks_count,
 	int tasks_complete, bool cheating) {
-		
+
 	_id_member = id_member;
 	_name = name;
 	_surname = surname;
@@ -150,4 +150,4 @@ std::ostream& operator << (std::ostream& os, const contest_info& info) {
 	}
 
 	return os;
-}
+}	

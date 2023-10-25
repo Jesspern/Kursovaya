@@ -2,7 +2,11 @@
 #define DATA_BASE
 
 #include <iostream>
+
 #include "Btree.cpp"
+#include "AVLtree.cpp"
+#include "SplayTree.cpp"
+
 #include <memory>
 #include <stdexcept>
 #include "contest_info.h"
@@ -35,13 +39,13 @@ public:
 
 public:
 
-	data_base(flag f, int b_const);
+	data_base(flag f, int b_const = 3);
 
 	data_base();
 
 	data_base(data_base&& other);
 
-	data_base& operator=(data_base && other);
+	data_base& operator=(data_base&& other);
 
 	~data_base();
 

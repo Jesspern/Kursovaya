@@ -211,6 +211,46 @@ void read_node_keys::execute()
 				}
 			}
 		}
+		else if (dynamic_cast<binary_search_tree<contest_info*, contest_info*, comparer_id_member_id_contest>*>((collection_default*)_tree)) {
+			binary_search_tree<contest_info*, contest_info*, comparer_id_member_id_contest>* _btree = dynamic_cast<binary_search_tree<contest_info*, contest_info*, comparer_id_member_id_contest>*>((collection_default*)_tree);
+			command* temp;
+			contest_info copy_value;
+			auto it = _btree->infix_iterator_begin();
+			for (it; it != _btree->infix_iterator_end(); ++it) {
+				if (_comp.comparate(std::get<0>(*it), _key2) == 1) {
+					break;
+				}
+				if (_comp.comparate(std::get<0>(*it), _key2) == 2 or _comp.comparate(std::get<0>(*it), _key2) == 0) {
+					//std::cout << (std::get<1>(*it)) << std::endl;
+					temp = (std::get<1>(*it))->first_command;
+					copy_value = *(std::get<1>(*it));
+					if (temp == nullptr or temp->_time > _time) {
+						throw std::invalid_argument("Element dont exist");
+					}
+					else {
+						temp = temp->next_command;
+					}
+					while (temp != nullptr and temp->_time < _time) {
+						if (dynamic_cast<remove_node_key*>(temp)) {
+							if (temp->next_command == nullptr) {
+								throw std::invalid_argument("Element has been deleted");
+							}
+						}
+						else if (dynamic_cast<add_node_key*>(temp)) {
+							temp->execute(copy_value);
+						}
+						else {
+							temp->execute(copy_value);
+						}
+						temp = temp->next_command;
+					}
+					std::cout << copy_value << std::endl;
+				}
+			}
+		}
+		else {
+			throw std::invalid_argument("Wrong type tree");
+		}
 
 	}
 	else if (_flag == 1) {
@@ -251,7 +291,46 @@ void read_node_keys::execute()
 				}
 			}
 		}
-
+		else if (dynamic_cast<binary_search_tree<contest_info*, contest_info*, comparer_resume>*>((collection_resume*)_tree)) {
+			binary_search_tree<contest_info*, contest_info*, comparer_resume>* _btree = dynamic_cast<binary_search_tree<contest_info*, contest_info*, comparer_resume>*>((collection_resume*)_tree);
+			command* temp;
+			contest_info copy_value;
+			auto it = _btree->infix_iterator_begin();
+			for (it; it != _btree->infix_iterator_end(); ++it) {
+				if (_comp.comparate(std::get<0>(*it), _key2) == 1) {
+					break;
+				}
+				if (_comp.comparate(std::get<0>(*it), _key2) == 2 or _comp.comparate(std::get<0>(*it), _key2) == 0) {
+					//std::cout << (std::get<1>(*it)) << std::endl;
+					temp = (std::get<1>(*it))->first_command;
+					copy_value = *(std::get<1>(*it));
+					if (temp == nullptr or temp->_time > _time) {
+						throw std::invalid_argument("Element dont exist");
+					}
+					else {
+						temp = temp->next_command;
+					}
+					while (temp != nullptr and temp->_time < _time) {
+						if (dynamic_cast<remove_node_key*>(temp)) {
+							if (temp->next_command == nullptr) {
+								throw std::invalid_argument("Element has been deleted");
+							}
+						}
+						else if (dynamic_cast<add_node_key*>(temp)) {
+							temp->execute(copy_value);
+						}
+						else {
+							temp->execute(copy_value);
+						}
+						temp = temp->next_command;
+					}
+					std::cout << copy_value << std::endl;
+				}
+			}
+		}
+		else {
+			throw std::invalid_argument("Wrong type tree");
+		}
 	}
 
 }
@@ -261,7 +340,7 @@ void read_node_keys::execute()
 //}
 //
 void invoker::add_command(contest_info& info, command* cmd) {
- 	command* temp = info.first_command;
+	command* temp = info.first_command;
 	if (temp == nullptr) {
 		if (dynamic_cast<add_node_key*>(cmd)) {
 			info.first_command = cmd;
@@ -283,6 +362,9 @@ void invoker::add_command(contest_info& info, command* cmd) {
 			}
 		}
 		else {
+			if (dynamic_cast<add_node_key*>(cmd)) {
+				throw std::invalid_argument("Element is already exist");
+			}
 			temp->next_command = cmd;
 		}
 	}

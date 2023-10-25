@@ -37,7 +37,7 @@ public:
 	~contest_info() = default;
 
 	contest_info& operator=(const contest_info& other);
-	
+
 	void set_id_member(int id_member);
 
 	int get_id_member() const;
